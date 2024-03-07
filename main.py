@@ -7,7 +7,7 @@ app = FastAPI(
     version="0.0.1"
 )
 
-# Diccionarios para simular la base de datos
+# Diccionarios para simular una base de datos
 users = {}
 tasks = {}
 
