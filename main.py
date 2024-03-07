@@ -7,7 +7,7 @@ app = FastAPI(
     version="0.0.1"
 )
 
-# Diccionarios para simular la base de datos
+# Diccionarios para simular una base de datos
 users = {}
 tasks = {}
 
@@ -23,20 +23,3 @@ async def get_user(user_id: str):
     if user:
         return JSONResponse(content=user, status_code=status.HTTP_200_OK)
     return JSONResponse(content={"message": "User not found"}, status_code=status.HTTP_404_NOT_FOUND)
-
-@app.post("/tasks/create/", status_code=status.HTTP_201_CREATED)
-async def create_task(user_id: str, title: str, description: str, status: str):
-    if user_id not in users:
-        return JSONResponse(content={"message": "User not found"}, status_code=status.HTTP_404_NOT_FOUND)
-
-    task_id = str(uuid.uuid4())
-    tasks[task_id] = {"title": title, "description": description, "status": status, "user_id": user_id}
-    return {"message": "Task created successfully", "task_id": task_id}
-
-@app.get("/tasks/{user_id}/")
-async def list_tasks_by_user(user_id: str):
-    if user_id not in users:
-        return JSONResponse(content={"message": "User not found"}, status_code=status.HTTP_404_NOT_FOUND)
-
-    user_tasks = [task for task_id, task in tasks.items() if task["user_id"] == user_id]
-    return JSONResponse(content=user_tasks, status_code=status.HTTP_200_OK)
