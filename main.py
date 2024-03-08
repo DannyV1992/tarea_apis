@@ -24,7 +24,6 @@ async def get_user(user_id: str):
         return JSONResponse(content=user, status_code=status.HTTP_200_OK)
     return JSONResponse(content={"message": "User not found"}, status_code=status.HTTP_404_NOT_FOUND)
 
-
 @app.post("/tasks/create/", status_code=status.HTTP_201_CREATED)
 async def create_task(user_id: str, title: str, description: str, status: str):
     if user_id not in users:
@@ -41,3 +40,4 @@ async def list_tasks_by_user(user_id: str):
 
     user_tasks = [task for task_id, task in tasks.items() if task["user_id"] == user_id]
     return JSONResponse(content=user_tasks, status_code=status.HTTP_200_OK)
+
